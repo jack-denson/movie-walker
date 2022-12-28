@@ -22,7 +22,9 @@ async function getLinkData( req, res ) {
 async function getFilmData( film_id ) {
     const tmdb_url = `https://api.themoviedb.org/3/movie/${ film_id }?api_key=${ process.env.TMDB_API_KEY }&append_to_response=credits`
 
-    const tmdb_response = await axios.get( tmdb_url );
+    const tmdb_response = await axios.get( tmdb_url, { 
+        headers: { "Accept-Encoding": "application/json" } 
+    });
     const film_data = tmdb_response.data;
     const { poster_path, original_title, release_date, credits, id } = film_data;
 
@@ -58,7 +60,9 @@ async function getFilmData( film_id ) {
 async function getPersonData( person_id ) {
     const tmdb_url = `https://api.themoviedb.org/3/person/${ person_id }?api_key=${ process.env.TMDB_API_KEY }&append_to_response=movie_credits`;
 
-    const tmdb_response = await axios.get( tmdb_url );
+    const tmdb_response = await axios.get( tmdb_url, { 
+        headers: { "Accept-Encoding": "application/json" } 
+    });
     const person_data = tmdb_response.data;
     const { name, id, movie_credits, profile_path } = person_data;
 
