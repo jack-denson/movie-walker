@@ -90,8 +90,9 @@ async function getPersonData( person_id ) {
     return {
         name,
         tmdb_id: id,
+        profile_path,
         movie_credits,
-        profile_path
+        is_film: false
     }
 
 
