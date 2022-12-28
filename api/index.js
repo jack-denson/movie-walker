@@ -1,5 +1,6 @@
 const express    = require('express');
 const dotenv     = require('dotenv');
+const cors       = require('cors')
 const links      = require('./links');
 const challenges = require('./challenges');
 
@@ -10,9 +11,10 @@ async function run() {
 
     app.use( express.json() );
     app.use( express.urlencoded({ extended: true }) );
+    const cors_policy = cors({origin: 'http://localhost:3000' })
 
-    await links.route( app, [] );
-    await challenges.route( app, [] );
+    await links.route( app, [ cors_policy ] );
+    await challenges.route( app, [ cors_policy ] );
 
     app.listen( port, () => {
         console.log(`Listening on port ${ port }`);
