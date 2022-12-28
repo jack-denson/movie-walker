@@ -1,4 +1,5 @@
 import './App.css';
+import Game from './Game';
 
 function App() {
   return (
@@ -8,6 +9,9 @@ function App() {
           MovieWalker
         </p>
       </header>
+      <div>
+        <Game />
+      </div>
     </div>
   );
 }
