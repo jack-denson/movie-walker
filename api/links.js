@@ -43,7 +43,7 @@ async function getFilmData( film_id ) {
             name: crewMember.name,
             tmdb_id: crewMember.id,
             profile_path: crewMember.profile_path,
-
+            job: crewMember.job
         }
     });
 
