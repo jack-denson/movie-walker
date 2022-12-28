@@ -1,6 +1,8 @@
 
-import React from 'react'
+import React from 'react';
 import axios from 'axios';
+import Person from './Person';
+import Film from './Film';
 
 class MovieNodeView extends React.Component {
   constructor(props) {
@@ -18,17 +20,70 @@ class MovieNodeView extends React.Component {
     this.getAllCredits();
   }
 
-  render() {
+  getFilmCastAndCrew() {
     let cast_credits = [];
     for( let i = 0; i < this.state.movieNode?.credits.cast?.length || 0; i++ ) {
         const credit = this.state.movieNode.credits.cast[ i ];
-        cast_credits.push( <div key={ i + "_cast_" + credit.id}> {credit.name} - <i>{ credit.role }</i></div> )
+        cast_credits.push(
+            <Person
+                key={ i + "_cast_" + credit.id}
+                name={ credit.name }
+                role={ credit.role }
+                imgPath={ credit.profile_path }
+            ></Person>
+        );
     }
     let crew_credits = [];
     for( let i = 0; i < this.state.movieNode?.credits.crew?.length || 0; i++ ) {
         const credit = this.state.movieNode.credits.crew[ i ];
-        crew_credits.push( <div key={ i + "_crew_" + credit.id}> {credit.name} - <i> { credit.job }</i></div> )
+        crew_credits.push(
+            <Person
+                key={ i + "_crew_" + credit.id}
+                name={ credit.name }
+                role={ credit.job }
+                imgPath={ credit.profile_path }
+            ></Person>
+        );
     }
+
+    return {
+        cast_credits,
+        crew_credits
+    }
+  }
+
+  getPersonCredits() {
+    let cast_credits = [];
+    for( let i = 0; i < this.state.movieNode?.movie_credits.cast?.length || 0; i++ ) {
+        const credit = this.state.movieNode.movie_credits.cast[ i ];
+        cast_credits.push(
+            <Film
+                key={ i + "_cast_" + credit.id}
+                title={ credit.title }
+                imgPath={ credit.poster_path }
+                credit={ credit.role }
+            ></Film>
+        );
+    }
+    let crew_credits = [];
+    for( let i = 0; i < this.state.movieNode?.movie_credits.crew?.length || 0; i++ ) {
+        const credit = this.state.movieNode.movie_credits.crew[ i ];
+        crew_credits.push(
+            <Film
+                key={ i + "_crew_" + credit.id}
+                title={ credit.title }
+                imgPath={ credit.poster_path }
+                credit={ credit.job }
+            ></Film>
+        );
+    }
+    return { cast_credits, crew_credits }
+
+  }
+
+  render() {
+
+    const { cast_credits, crew_credits } = this.props.current.is_film ? this.getFilmCastAndCrew() : this.getPersonCredits();
 
     return (
         <div>

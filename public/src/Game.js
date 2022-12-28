@@ -51,13 +51,13 @@ class Game extends React.Component {
             "profile_path": "/oTB9vGIBacH5aQNS0pUM74QSWuf.jpg",
             "is_film": false
         },
-        {
-            "poster_path": "/jdwSkQu3XirmX18MNj8CqFWsCk.jpg",
-            "title": "Burn After Reading",
-            "release": "2008",
-            "tmdb_id": 4944,
-            "is_film": true
-        },
+        // {
+        //     "poster_path": "/jdwSkQu3XirmX18MNj8CqFWsCk.jpg",
+        //     "title": "Burn After Reading",
+        //     "release": "2008",
+        //     "tmdb_id": 4944,
+        //     "is_film": true
+        // },
       ]
     };
   }
