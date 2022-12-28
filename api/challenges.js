@@ -4,10 +4,10 @@ async function getChallenge( req, res ) {
 
     const challenge = [
         {
-            "poster_path":"/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
-            "title":"Once Upon a Time… in Hollywood",
-            "release":"2019",
-            "tmdb_id":466272
+            "poster_path": "/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+            "title": "Once Upon a Time… in Hollywood",
+            "release": "2019",
+            "tmdb_id": 466272
         },
         {
             "name": "Frances McDormand",
