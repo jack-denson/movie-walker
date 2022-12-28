@@ -62,6 +62,52 @@ class Game extends React.Component {
     };
   }
 
+  takeLink( nextNode ) {
+    const {
+      release,
+      title,
+      tmdb_id,
+      poster_path,
+      name,
+      profile_path
+    } = nextNode;
+
+    if( !this.state.foundPath[ this.state.foundPath.length - 1 ].is_film ) {
+      this.takeFilmLink({
+        release,
+        title,
+        tmdb_id,
+        poster_path,
+      });
+    } else {
+      this.takePersonLink({
+        release,
+        name,
+        tmdb_id,
+        profile_path,
+      });
+    }
+  }
+
+  takeFilmLink( filmToGoto ) { 
+    this.setState({
+      ...this.state,
+      foundPath: [ ...this.state.foundPath, {
+        ...filmToGoto,
+        is_film: true
+      } ]
+    });
+  }
+  
+  takePersonLink( personToGoto ) { 
+    this.setState({
+      ...this.state,
+      foundPath: [ ...this.state.foundPath, {
+        ...personToGoto,
+        is_film: false
+      } ]
+    });
+  }
   render() {
     return (
         <div>
@@ -69,7 +115,11 @@ class Game extends React.Component {
             <Divider />
             <Path foundPath={ this.state.foundPath }></Path>
             <Divider />
-            <MovieNodeView current={ this.state.foundPath[ this.state.foundPath.length - 1 ] }></MovieNodeView>
+            <MovieNodeView
+              current={ this.state.foundPath[ this.state.foundPath.length - 1 ] }
+              takeLink={ this.takeLink.bind( this ) }
+              key={ this.state.foundPath[ this.state.foundPath.length - 1 ].tmdb_id }>
+            </MovieNodeView>
         </div>
     );
 

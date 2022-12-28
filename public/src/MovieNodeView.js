@@ -25,24 +25,32 @@ class MovieNodeView extends React.Component {
     for( let i = 0; i < this.state.movieNode?.credits.cast?.length || 0; i++ ) {
         const credit = this.state.movieNode.credits.cast[ i ];
         cast_credits.push(
-            <Person
+            <div
                 key={ i + "_cast_" + credit.id}
-                name={ credit.name }
-                role={ credit.role }
-                imgPath={ credit.profile_path }
-            ></Person>
+                onClick={ this.takeLink.bind( this, credit ) }
+            >
+                <Person
+                    name={ credit.name }
+                    role={ credit.role }
+                    imgPath={ credit.profile_path }
+                ></Person>
+            </div>
         );
     }
     let crew_credits = [];
     for( let i = 0; i < this.state.movieNode?.credits.crew?.length || 0; i++ ) {
         const credit = this.state.movieNode.credits.crew[ i ];
         crew_credits.push(
-            <Person
+            <div
                 key={ i + "_crew_" + credit.id}
-                name={ credit.name }
-                role={ credit.job }
-                imgPath={ credit.profile_path }
-            ></Person>
+                onClick={ this.takeLink.bind( this, credit ) }
+            >
+                <Person
+                    name={ credit.name }
+                    role={ credit.job }
+                    imgPath={ credit.profile_path }
+                ></Person>
+            </div>
         );
     }
 
@@ -57,32 +65,44 @@ class MovieNodeView extends React.Component {
     for( let i = 0; i < this.state.movieNode?.movie_credits.cast?.length || 0; i++ ) {
         const credit = this.state.movieNode.movie_credits.cast[ i ];
         cast_credits.push(
-            <Film
+            <div
+                onClick={ this.takeLink.bind( this, credit ) }
                 key={ i + "_cast_" + credit.id}
-                title={ credit.title }
-                imgPath={ credit.poster_path }
-                credit={ credit.role }
-            ></Film>
+            >
+                <Film
+                    title={ credit.title }
+                    imgPath={ credit.poster_path }
+                    credit={ credit.role }
+                ></Film>
+            </div>
+
         );
     }
     let crew_credits = [];
     for( let i = 0; i < this.state.movieNode?.movie_credits.crew?.length || 0; i++ ) {
         const credit = this.state.movieNode.movie_credits.crew[ i ];
         crew_credits.push(
-            <Film
+            <div
+                onClick={ this.takeLink.bind( this, credit ) }
                 key={ i + "_crew_" + credit.id}
-                title={ credit.title }
-                imgPath={ credit.poster_path }
-                credit={ credit.job }
-            ></Film>
+            >
+                <Film
+                    title={ credit.title }
+                    imgPath={ credit.poster_path }
+                    credit={ credit.job }
+                ></Film>
+            </div>
         );
     }
     return { cast_credits, crew_credits }
 
   }
 
-  render() {
+  takeLink( link ) {
+    this.props.takeLink( link );
+  }
 
+  render() {
     const { cast_credits, crew_credits } = this.props.current.is_film ? this.getFilmCastAndCrew() : this.getPersonCredits();
 
     return (
