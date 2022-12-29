@@ -2,9 +2,6 @@ import React from 'react'
 import defaultPersonImg from './defaultPersonImg.jpg';
 
 class Film extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     return (
