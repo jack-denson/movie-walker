@@ -112,9 +112,9 @@ class Game extends React.Component {
     return (
         <div>
             <ChallengeIndicator challenge={ this.state.challenge }></ChallengeIndicator>
-            <Divider />
+            <Divider style={{ background: 'white' }} />
             <Path foundPath={ this.state.foundPath }></Path>
-            <Divider />
+            <Divider style={{ background: 'white' }} />
             <MovieNodeView
               current={ this.state.foundPath[ this.state.foundPath.length - 1 ] }
               takeLink={ this.takeLink.bind( this ) }

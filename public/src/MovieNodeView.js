@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import Person from './Person';
 import Film from './Film';
+import './MovieNodeView.css'
 
 class MovieNodeView extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class MovieNodeView extends React.Component {
         <div
           key={ i + "_cast_" + credit.id}
           onClick={ this.takeLink.bind( this, credit ) }
+          className="clickableCredit"
         >
           <Person
             name={ credit.name }
@@ -44,6 +46,7 @@ class MovieNodeView extends React.Component {
         <div
           key={ i + "_crew_" + credit.id}
           onClick={ this.takeLink.bind( this, credit ) }
+          className="clickableCredit"
         >
           <Person
             name={ credit.name }
@@ -68,6 +71,7 @@ class MovieNodeView extends React.Component {
         <div
           onClick={ this.takeLink.bind( this, credit ) }
           key={ i + "_cast_" + credit.id}
+          className="clickableCredit"
         >
           <Film
             title={ credit.title }
@@ -85,6 +89,7 @@ class MovieNodeView extends React.Component {
         <div
           onClick={ this.takeLink.bind( this, credit ) }
           key={ i + "_crew_" + credit.id}
+          className="clickableCredit"
         >
           <Film
             title={ credit.title }
@@ -108,13 +113,15 @@ class MovieNodeView extends React.Component {
     return (
       <div>
         <h2> { this.props.current.name || this.props.current.title } </h2>
-        <h3> Cast </h3>
-        <div>
-          { cast_credits }
-        </div>
-        <h3> Crew </h3>
-        <div>
-          { crew_credits }
+        <div className="linksPane">
+          <h3> Cast </h3>
+          <div>
+            { cast_credits }
+          </div>
+          <h3> Crew </h3>
+          <div>
+            { crew_credits }
+          </div>
         </div>
       </div>
     );
