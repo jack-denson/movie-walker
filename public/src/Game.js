@@ -108,12 +108,24 @@ class Game extends React.Component {
       } ]
     });
   }
+
+  backtrackPath( toIndex ) {
+    if( toIndex < this.state.foundPath.length ) {
+      this.setState({
+        ...this.state,
+        foundPath: this.state.foundPath.slice( 0, toIndex + 1 )
+      })
+    }
+  }
+
   render() {
     return (
         <div>
             <ChallengeIndicator challenge={ this.state.challenge }></ChallengeIndicator>
             <Divider style={{ background: 'white' }} />
-            <Path foundPath={ this.state.foundPath }></Path>
+            <Path
+              foundPath={ this.state.foundPath }
+              backtrack={ this.backtrackPath.bind( this ) }></Path>
             <Divider style={{ background: 'white' }} />
             <MovieNodeView
               current={ this.state.foundPath[ this.state.foundPath.length - 1 ] }
