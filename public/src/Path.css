@@ -1,0 +1,5 @@
+.foundPath {
+    margin-top: calc( 10px + 2vh );
+    margin-bottom: calc( 10px + 2vh );
+    text-align: center;
+}

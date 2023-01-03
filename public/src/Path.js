@@ -1,4 +1,5 @@
 import React from 'react'
+import './Path.css'
 import Link from '@mui/material/Link';
 
 class Path extends React.Component {
