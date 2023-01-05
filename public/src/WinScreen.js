@@ -16,11 +16,13 @@ class WinScreen extends React.Component {
             return <Film
                 title={ node.title }
                 imgPath={ node.poster_path }
+                key={'win' + node.tmdb_id }
             ></Film>
         } else {
             return <Person
             name={ node.name }
             imgPath={ node.profile_path }
+            key={'win' + node.tmdb_id }
           ></Person>
         }
     }).map( node => [ node, <div style={{'text-align': 'center'}}>&#x2193;</div> ]).flat();
