@@ -1,21 +1,30 @@
 import React from 'react'
+import './ChallengeIndicator.css';
 
 class ChallengeIndicator extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {};
-  }
 
   render() {
     return (
-        <div>
-            <span className="challengeFrom">
-                {this.props.challenge[ 0 ].title || this.props.challenge[ 0 ].name }
-            </span>
-            <span> &#8594; </span>
-            <span className="challengeTo">
+        <div className="challengeContainer">
+            <div className="challengeFrom">
+              <img
+                src={ this.props.challenge[ 0 ].is_film ? `https://image.tmdb.org/t/p/w92${ this.props.challenge[ 0 ].poster_path }` : `https://image.tmdb.org/t/p/w92${ this.props.challenge[ 0 ].profile_path }` }
+                alt={ this.props.name }
+              />
+            <div className="challengeName">
+                {this.props.challenge[ 0 ].title || this.props.challenge[ 0 ].name } </div>
+            </div>
+            <div className="challengeTo"></div>
+            <div style={{display: 'flex', 'align-items': 'center'}}> &#8594; </div>
+            <div className="challengeTo">
+              <div className="challengeName">
                 {this.props.challenge[ 1 ].title || this.props.challenge[ 1 ].name }
-            </span>
+              </div>
+              <img
+                src={ this.props.challenge[ 1 ].is_film ? `https://image.tmdb.org/t/p/w92${ this.props.challenge[ 1 ].poster_path }` : `https://image.tmdb.org/t/p/w92${ this.props.challenge[ 1 ].profile_path }` }
+                alt={ this.props.name }
+              />
+            </div>
         </div>
     );
 

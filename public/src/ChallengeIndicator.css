@@ -1,0 +1,38 @@
+.challengeContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+div.challengeContainer div img {
+    border-radius: 7px;
+}
+
+.challengeFrom {
+    margin-left: 5vw;
+    display: flex;
+    align-items: center;
+}
+
+.challengeTo {
+    margin-right: 5vw;
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+    .challengeFrom {
+        flex-direction: column;
+    }
+    .challengeTo {
+        flex-direction: column-reverse;
+
+    }
+}
+
+.challengeName {
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
