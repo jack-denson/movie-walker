@@ -3,6 +3,7 @@ import './Game.css'
 import Path from './Path.js';
 import ChallengeIndicator from './ChallengeIndicator';
 import MovieNodeView from './MovieNodeView';
+import WinScreen from './WinScreen';
 import { Divider } from '@mui/material';
 
 class Game extends React.Component {
@@ -132,6 +133,9 @@ class Game extends React.Component {
               takeLink={ this.takeLink.bind( this ) }
               key={ this.state.foundPath[ this.state.foundPath.length - 1 ].tmdb_id }>
             </MovieNodeView>
+            <WinScreen
+              path={this.state.foundPath}
+              gameWon={ this.state.foundPath[ this.state.foundPath.length - 1].tmdb_id == this.state.challenge[ 1 ].tmdb_id }></WinScreen>
         </div>
     );
 
