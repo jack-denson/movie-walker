@@ -14,7 +14,6 @@ class ChallengeIndicator extends React.Component {
             <div className="challengeName">
                 {this.props.challenge[ 0 ].title || this.props.challenge[ 0 ].name } </div>
             </div>
-            <div className="challengeTo"></div>
             <div style={{display: 'flex', 'align-items': 'center'}}> &#8594; </div>
             <div className="challengeTo">
               <div className="challengeName">
