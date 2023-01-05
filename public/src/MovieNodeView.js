@@ -112,8 +112,8 @@ class MovieNodeView extends React.Component {
     const { cast_credits, crew_credits } = this.props.current.is_film ? this.getFilmCastAndCrew() : this.getPersonCredits();
 
     return (
-      <div style={{ 'padding-top': '2vh'}}>
-        <Typography component="div" variant="h4" style={{'text-align': 'center'}}>
+      <div style={{ paddingTop: '2vh'}}>
+        <Typography component="div" variant="h4" style={{textAlign: 'center'}}>
           { this.props.current.name || this.props.current.title }
         </Typography>
         <div className="rolesHeader">
