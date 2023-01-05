@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import Person from './Person';
 import Film from './Film';
+import Typography from '@mui/material/Typography';
 import './MovieNodeView.css'
 
 class MovieNodeView extends React.Component {
@@ -111,14 +112,26 @@ class MovieNodeView extends React.Component {
     const { cast_credits, crew_credits } = this.props.current.is_film ? this.getFilmCastAndCrew() : this.getPersonCredits();
 
     return (
-      <div>
-        <h2> { this.props.current.name || this.props.current.title } </h2>
+      <div style={{ 'padding-top': '2vh'}}>
+        <Typography component="div" variant="h4" style={{'text-align': 'center'}}>
+          { this.props.current.name || this.props.current.title }
+        </Typography>
+        <div className="rolesHeader">
+          <Typography component="div" variant="h5" className="rolesHeader">
+            {this.props.current.is_film ? 'Cast' : 'Roles in Cast '}
+          </Typography>
+        </div>
         <div className="linksPane">
-          <h3> Cast </h3>
           <div>
             { cast_credits }
           </div>
-          <h3> Crew </h3>
+        </div>
+        <div className="rolesHeader">
+          <Typography component="div" variant="h5">
+            {this.props.current.is_film ? 'Crew' : 'Roles in Crew '}
+          </Typography>
+        </div>
+        <div className="linksPane">
           <div>
             { crew_credits }
           </div>
