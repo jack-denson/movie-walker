@@ -87,6 +87,13 @@ class Game extends React.Component {
     }
   }
 
+  replayGame() {
+    this.setState({
+      ...this.state,
+      foundPath: [ this.state.challenge[ 0 ] ]
+    });
+  }
+
   render() {
     if( this.state.challenge.length ) {
       return (
@@ -104,7 +111,8 @@ class Game extends React.Component {
             </MovieNodeView>
             <WinScreen
               path={this.state.foundPath}
-              gameWon={ this.state.foundPath[ this.state.foundPath.length - 1].tmdb_id == this.state.challenge[ 1 ].tmdb_id }></WinScreen>
+              gameWon={ this.state.foundPath[ this.state.foundPath.length - 1].tmdb_id == this.state.challenge[ 1 ].tmdb_id }
+              restartGame={ this.replayGame.bind( this ) }></WinScreen>
         </div>
       );
     } else {

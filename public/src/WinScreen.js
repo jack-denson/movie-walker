@@ -1,7 +1,8 @@
 import React from 'react'
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import { DialogContent, Typography } from '@mui/material';
+import { Button, DialogActions, DialogContent, Typography } from '@mui/material';
+import { IosShare, Replay } from '@mui/icons-material'
 import Film from './Film';
 import Person from './Person';
 
@@ -32,7 +33,10 @@ class WinScreen extends React.Component {
     return (
       <Dialog open={ this.props.gameWon } maxWidth="lg" fullWidth={true}>
         <div className="winDialog">
-            <DialogTitle> You win!! </DialogTitle>
+            <DialogActions sx={{justifyContent: 'space-evenly'}}>
+                <Button variant="contained" endIcon={<Replay />} onClick={ this.props.restartGame }> Find Another Route </Button>
+                <Button variant="contained" endIcon={<IosShare />} disabled={true}> Share </Button>
+            </DialogActions>
             <DialogContent>
                 <Typography> Found in { numSteps } step{ numSteps == 1 ? '' : 's'}:</Typography>
                 { pathViewer }
