@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const { getPersonData, getFilmData } = require('./links');
 
 async function randomPopularMovie() {
-    const movie_page = Math.floor( Math.random() * 50 )
+    const movie_page = Math.ceil( Math.random() * 50 )
     const uri = `https://api.themoviedb.org/3/discover/movie?sort_by=vote_count.desc&page=${ movie_page }&api_key=${process.env.TMDB_API_KEY}`
 
     const { data: res } = await axios.get( uri );
