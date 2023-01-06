@@ -46,11 +46,12 @@ async function getFilmData( film_id ) {
             job: crewMember.job
         }
     });
+    // console.log( 'Getting film data:', original_title );
 
     return {
         poster_path,
         title: original_title,
-        release: release_date.substr( 0, 4 ),
+        release: release_date?.substr( 0, 4 ),
         tmdb_id: id,
         credits,
         is_film: true
@@ -72,7 +73,8 @@ async function getPersonData( person_id ) {
             tmdb_id: movie.id,
             title: movie.title,
             poster_path: movie.poster_path,
-            release: movie.release_date.substr( 0, 4 )
+            release: movie.release_date?.substr( 0, 4 ),
+            vote_count: movie.vote_count
         }
     });
     movie_credits.crew = movie_credits.crew.filter(
@@ -83,9 +85,12 @@ async function getPersonData( person_id ) {
             tmdb_id: movie.id,
             title: movie.title,
             poster_path: movie.poster_path,
-            release: movie.release_date.substr( 0, 4 )
+            release: movie.release_date?.substr( 0, 4 ),
+            vote_count: movie.vote_count
+
         }
     });
+    // console.log( 'Getting person data:', name );
 
     return {
         name,
@@ -94,8 +99,6 @@ async function getPersonData( person_id ) {
         movie_credits,
         is_film: false
     }
-
-
 
 }
 
