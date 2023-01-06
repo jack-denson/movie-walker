@@ -102,5 +102,7 @@ async function getPersonData( person_id ) {
 module.exports = {
     route: async ( app, middleware ) => {
         app.get( '/link/:to', ...middleware, getLinkData );
-    }
+    },
+    getPersonData,
+    getFilmData
 }
