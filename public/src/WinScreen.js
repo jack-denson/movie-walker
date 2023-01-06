@@ -5,6 +5,7 @@ import { Button, DialogActions, DialogContent, Typography } from '@mui/material'
 import { IosShare, Replay } from '@mui/icons-material'
 import Film from './Film';
 import Person from './Person';
+import './WinScreen.css';
 
 class WinScreen extends React.Component {
 
@@ -26,19 +27,29 @@ class WinScreen extends React.Component {
             key={'win' + node.tmdb_id }
           ></Person>
         }
-    }).map( node => [ node, <div style={{'text-align': 'center'}}>&#x2193;</div> ]).flat();
+    }).map(
+        ( node, i ) => [
+            node,
+            <div style={{textAlign: 'center'}} key={'winarrow' + i }>&#x2193;</div>
+        ]
+    ).flat();
     pathViewer.pop();
 
 
     return (
       <Dialog open={ this.props.gameWon } maxWidth="lg" fullWidth={true}>
         <div className="winDialog">
+            <Typography
+                sx={{textAlign: 'center', marginTop: '25px', marginBottom: '10px'}}
+                variant="h3"> 
+                You Win!
+            </Typography>
             <DialogActions sx={{justifyContent: 'space-evenly'}}>
                 <Button variant="contained" endIcon={<Replay />} onClick={ this.props.restartGame }> Find Another Route </Button>
                 <Button variant="contained" endIcon={<IosShare />} disabled={true}> Share </Button>
             </DialogActions>
             <DialogContent>
-                <Typography> Found in { numSteps } step{ numSteps == 1 ? '' : 's'}:</Typography>
+                <Typography sx={{textAlign: 'center'}} variant="h6"> Found in { numSteps } step{ numSteps == 1 ? '' : 's'}:</Typography>
                 { pathViewer }
             </DialogContent>
             
