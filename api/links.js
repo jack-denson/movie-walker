@@ -1,22 +1,48 @@
 const axios = require('axios');
+const dbConnect = require('./dbConnect');
 
 const crewToInclude = [ 'Director', 'Executive Producer', 'Producer' ];
 
-async function getLinkData( req, res ) {
+async function getLinkData( req, res, cache ) {
     const { is_film } = req.query || true;
     const { to } = req.params;
 
-    // TODO: Check cache first(redis?)
+    try {
+        const result = await getFilmOrPerson( is_film, to, cache );
+        return res.json( result );
+    } catch( e ) {
+        return res.json({})
+    }
+
+}
+
+async function getFilmOrPerson( is_film, to, cache ) {
+    const cached = await cache.findOne({ is_film, tmdb_id: to });
+    if( cached ) {
+        console.log("CACHED")
+        return cached.data;
+    }
 
     if( is_film ) {
         const film_data = await getFilmData( to )
-        return res.json( film_data )
+        await cache.insertOne({
+            is_film,
+            tmdb_id: to,
+            data: film_data
+        });
+
+        return film_data;
     } else {
         const person_data = await getPersonData( to )
 
-        return res.json( person_data )
-    }
+        await cache.insertOne({
+            is_film,
+            tmdb_id: to,
+            data: person_data
+        });
 
+        return person_data;
+    }
 }
 
 async function getFilmData( film_id ) {
@@ -46,7 +72,7 @@ async function getFilmData( film_id ) {
             job: crewMember.job
         }
     });
-    // console.log( 'Getting film data:', original_title );
+    console.log( 'Getting film data:', original_title );
 
     return {
         poster_path,
@@ -90,7 +116,7 @@ async function getPersonData( person_id ) {
 
         }
     });
-    // console.log( 'Getting person data:', name );
+    console.log( 'Getting person data:', name );
 
     return {
         name,
@@ -104,8 +130,8 @@ async function getPersonData( person_id ) {
 
 module.exports = {
     route: async ( app, middleware ) => {
-        app.get( '/link/:to', ...middleware, getLinkData );
+        const cache = await dbConnect('tmdb_cache');
+        app.get( '/link/:to', ...middleware, async ( req, res ) => getLinkData( req, res, cache ) );
     },
-    getPersonData,
-    getFilmData
+    getFilmOrPerson
 }
