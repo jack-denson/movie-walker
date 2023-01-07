@@ -126,8 +126,6 @@ class Game extends React.Component {
   }
 
   currentPathIsTodays() {
-    console.log( new Date().setHours(0,0,0,0))
-    console.log(+localStorage.getItem( 'currentPathDate' ));
     return new Date().setHours(0, 0, 0, 0) === +localStorage.getItem( 'currentPathDate' );
   }
 
