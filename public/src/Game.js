@@ -27,7 +27,7 @@ class Game extends React.Component {
     this.setState({
       challenge: api_res,
       foundPath: ( this.currentPathIsTodays() && JSON.parse( localStorage.getItem('currentPath') ) ) || [ api_res[ 0 ] ]
-    });
+    }, this.updateCurrentPath);
   }
 
   takeLink( nextNode ) {
