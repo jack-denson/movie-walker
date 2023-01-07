@@ -47,7 +47,7 @@ class WinScreen extends React.Component {
         variant="h3"> 
         You Win!
       </Typography>
-      <DialogActions sx={{justifyContent: 'space-evenly'}}>
+      <DialogActions sx={{justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
         <div className="scoreIndicator">
           <Typography variant="h4">{ localStorage.getItem('streak') || 0 }</Typography>
           <Typography variant="overline">Streak</Typography>
@@ -58,7 +58,6 @@ class WinScreen extends React.Component {
           </Typography>
           <Typography variant="overline">Today's Best</Typography>
         </div>
-
         <Button variant="contained" endIcon={<Replay />} onClick={ this.props.restartGame }> Find Another </Button>
         <Button variant="contained" endIcon={<IosShare />} disabled={true}> Share </Button>
       </DialogActions>
