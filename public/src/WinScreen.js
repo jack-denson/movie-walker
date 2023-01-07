@@ -54,7 +54,7 @@ class WinScreen extends React.Component {
         </div>
         <div className="scoreIndicator">
           <Typography variant="h4">
-            { bestScore || this.props.path.length - 1 }
+            { Math.min( bestScore, this.props.path.length - 1 ) || this.props.path.length - 1 }
           </Typography>
           <Typography variant="overline">Today's Best</Typography>
         </div>
