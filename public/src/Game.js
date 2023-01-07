@@ -40,7 +40,9 @@ class Game extends React.Component {
       profile_path
     } = nextNode;
 
-    if( !this.state.foundPath[ this.state.foundPath.length - 1 ].is_film ) {
+    if(!this.currentPathIsTodays()) {
+      this.fetchChallenge();
+    } else if( !this.state.foundPath[ this.state.foundPath.length - 1 ].is_film ) {
       this.takeFilmLink({
         release,
         title,
@@ -93,7 +95,7 @@ class Game extends React.Component {
     }, () => { this.updateCurrentPath(); this.addWin() } );
   }
   
-  takePersonLink( personToGoto ) { 
+  takePersonLink( personToGoto ) {
     this.setState({
       ...this.state,
       foundPath: [ ...this.state.foundPath, {
@@ -104,7 +106,9 @@ class Game extends React.Component {
   }
 
   backtrackPath( toIndex ) {
-    if( toIndex < this.state.foundPath.length ) {
+    if( !this.currentPathIsTodays() ) {
+      this.fetchChallenge();
+    } else if( toIndex < this.state.foundPath.length ) {
       this.setState({
         ...this.state,
         foundPath: this.state.foundPath.slice( 0, toIndex + 1 )
