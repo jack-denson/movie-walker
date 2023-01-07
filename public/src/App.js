@@ -12,6 +12,10 @@ function App() {
       <div>
         <Game />
       </div>
+      <footer>
+        <p> By <a href="https://jdenson.com"> Jack Denson </a>, 2023</p>
+        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+      </footer>
     </div>
   );
 }
