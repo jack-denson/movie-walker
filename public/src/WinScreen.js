@@ -34,6 +34,10 @@ class WinScreen extends React.Component {
   ).flat();
   pathViewer.pop();
 
+  const today = new Date().setHours(0,0,0,0);
+  const allWins = JSON.parse(localStorage.getItem('wins'))
+  const bestScore = allWins && allWins[ today ] && allWins[ today ].reduce( ( a, b ) => Math.min( a, b.length ), 10000 ) - 1
+
 
   return (
     <Dialog open={ this.props.gameWon } maxWidth="lg" fullWidth={true}>
@@ -44,7 +48,18 @@ class WinScreen extends React.Component {
         You Win!
       </Typography>
       <DialogActions sx={{justifyContent: 'space-evenly'}}>
-        <Button variant="contained" endIcon={<Replay />} onClick={ this.props.restartGame }> Find Another Route </Button>
+        <div className="scoreIndicator">
+          <Typography variant="h4">{ localStorage.getItem('streak') || 0 }</Typography>
+          <Typography variant="overline">Streak</Typography>
+        </div>
+        <div className="scoreIndicator">
+          <Typography variant="h4">
+            { bestScore }
+          </Typography>
+          <Typography variant="overline">Today's Best</Typography>
+        </div>
+
+        <Button variant="contained" endIcon={<Replay />} onClick={ this.props.restartGame }> Find Another </Button>
         <Button variant="contained" endIcon={<IosShare />} disabled={true}> Share </Button>
       </DialogActions>
       <DialogContent>

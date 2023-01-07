@@ -26,10 +26,9 @@ class Game extends React.Component {
     const { data: api_res } = await axios.get( api_url );
     this.setState({
       challenge: api_res,
-      foundPath: [ api_res[ 0 ] ]
+      foundPath: ( this.currentPathIsTodays() && JSON.parse( localStorage.getItem('currentPath') ) ) || [ api_res[ 0 ] ]
     });
   }
-
 
   takeLink( nextNode ) {
     const {
@@ -56,6 +55,32 @@ class Game extends React.Component {
         profile_path,
       });
     }
+
+  }
+
+  addWin() {
+    if( this.state.foundPath[ this.state.foundPath.length - 1 ].tmdb_id === this.state.challenge[ 1 ].tmdb_id ) {
+      const wins = JSON.parse( localStorage.getItem('wins') ) || {};
+      const streak = localStorage.getItem('streak') || 0;
+      const lastWin = localStorage.getItem('lastWin');
+      const today = new Date().setHours( 0, 0, 0, 0 );
+
+      if( !wins[ today ] ) {
+        if( lastWin === today - 24 * 60 * 60 * 1000 ) {
+          localStorage.setItem( 'streak', streak + 1 );
+        } else {
+          localStorage.setItem( 'streak', 1 );
+        }
+
+        wins[ today ] = [];
+
+      }
+      
+      wins[ today ] = [ ...wins[today], this.state.foundPath ];
+      localStorage.setItem( 'wins', JSON.stringify( wins ) );
+      localStorage.setItem( 'lastWin', today );
+
+    }
   }
 
   takeFilmLink( filmToGoto ) { 
@@ -65,7 +90,7 @@ class Game extends React.Component {
         ...filmToGoto,
         is_film: true
       } ]
-    });
+    }, () => { this.updateCurrentPath(); this.addWin() } );
   }
   
   takePersonLink( personToGoto ) { 
@@ -75,7 +100,7 @@ class Game extends React.Component {
         ...personToGoto,
         is_film: false
       } ]
-    });
+    }, () => { this.updateCurrentPath(); this.addWin() } );
   }
 
   backtrackPath( toIndex ) {
@@ -83,7 +108,7 @@ class Game extends React.Component {
       this.setState({
         ...this.state,
         foundPath: this.state.foundPath.slice( 0, toIndex + 1 )
-      })
+      }, this.updateCurrentPath )
     }
   }
 
@@ -91,8 +116,21 @@ class Game extends React.Component {
     this.setState({
       ...this.state,
       foundPath: [ this.state.challenge[ 0 ] ]
-    });
+    }, this.updateCurrentPath );
   }
+
+
+  updateCurrentPath() {
+    localStorage.setItem( 'currentPath', JSON.stringify(this.state.foundPath) );
+    localStorage.setItem( 'currentPathDate', new Date().setHours(0, 0, 0, 0))
+  }
+
+  currentPathIsTodays() {
+    console.log( new Date().setHours(0,0,0,0))
+    console.log(+localStorage.getItem( 'currentPathDate' ));
+    return new Date().setHours(0, 0, 0, 0) === +localStorage.getItem( 'currentPathDate' );
+  }
+
 
   render() {
     if( this.state.challenge.length ) {
