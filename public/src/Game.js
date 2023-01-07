@@ -13,7 +13,8 @@ class Game extends React.Component {
     super(props)
     this.state = {
       challenge: [],
-      foundPath: []
+      foundPath: [],
+      streak: localStorage.getItem('streak')
     };
   }
 
@@ -63,16 +64,17 @@ class Game extends React.Component {
   addWin() {
     if( this.state.foundPath[ this.state.foundPath.length - 1 ].tmdb_id === this.state.challenge[ 1 ].tmdb_id ) {
       const wins = JSON.parse( localStorage.getItem('wins') ) || {};
-      const streak = localStorage.getItem('streak') || 0;
+      const streak = +localStorage.getItem('streak') || 0;
       const lastWin = localStorage.getItem('lastWin');
       const today = new Date().setHours( 0, 0, 0, 0 );
 
       if( !wins[ today ] ) {
-        if( lastWin === today - 24 * 60 * 60 * 1000 ) {
+        if( +lastWin === today - 24 * 60 * 60 * 1000 ) {
           localStorage.setItem( 'streak', streak + 1 );
         } else {
           localStorage.setItem( 'streak', 1 );
         }
+        this.updateStreak();
 
         wins[ today ] = [];
 
@@ -133,6 +135,12 @@ class Game extends React.Component {
     return new Date().setHours(0, 0, 0, 0) === +localStorage.getItem( 'currentPathDate' );
   }
 
+  updateStreak() {
+    this.setState({
+      ...this.state,
+      streak: localStorage.getItem('streak')
+    });
+  }
 
   render() {
     if( this.state.challenge.length ) {
@@ -152,7 +160,8 @@ class Game extends React.Component {
             <WinScreen
               path={this.state.foundPath}
               gameWon={ this.state.foundPath[ this.state.foundPath.length - 1].tmdb_id == this.state.challenge[ 1 ].tmdb_id }
-              restartGame={ this.replayGame.bind( this ) }></WinScreen>
+              restartGame={ this.replayGame.bind( this ) }
+              streak={this.state.streak}></WinScreen>
         </div>
       );
     } else {

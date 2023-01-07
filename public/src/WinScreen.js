@@ -48,13 +48,13 @@ class WinScreen extends React.Component {
         You Win!
       </Typography>
       <DialogActions sx={{justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
-        <div className="scoreIndicator">
-          <Typography variant="h4">{ localStorage.getItem('streak') || 0 }</Typography>
+        <div className="scoreIndicator" key={"streak-indicator-win-" + this.props.gameWon}>
+          <Typography variant="h4">{ this.props.streak }</Typography>
           <Typography variant="overline">Streak</Typography>
         </div>
         <div className="scoreIndicator">
           <Typography variant="h4">
-            { bestScore }
+            { bestScore || this.props.path.length - 1 }
           </Typography>
           <Typography variant="overline">Today's Best</Typography>
         </div>
