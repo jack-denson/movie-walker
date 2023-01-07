@@ -126,11 +126,14 @@ class MovieNodeView extends React.Component {
             { cast_credits }
           </div>
         </div>
-        <div className="rolesHeader">
-          <Typography component="div" variant="h5">
-            {this.props.current.is_film ? 'Crew' : 'Roles in Crew '}
-          </Typography>
-        </div>
+        {
+          crew_credits.length > 0 &&
+          <div className="rolesHeader">
+            <Typography component="div" variant="h5">
+              {this.props.current.is_film ? 'Crew' : 'Roles in Crew '}
+            </Typography>
+          </div>          
+        }
         <div className="linksPane">
           <div>
             { crew_credits }
