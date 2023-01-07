@@ -1,7 +1,9 @@
 const axios = require('axios');
 const dotenv = require('dotenv');
 const { getFilmOrPerson } = require('./links');
-const dbConnect = require('./dbConnect');
+const { connect: dbConnect, close: dbClose } = require('./dbConnect');
+
+const MAX_SEARCHES = 2500;
 
 async function randomPopularMovie() {
     const movie_page = Math.ceil( Math.random() * 50 )
@@ -23,9 +25,7 @@ async function verifyReachability( from, to, cache ) {
 
     let moviesToExpand = [ from ];
 
-    while( expandedPeople.size + expandedMovies.size < 600 ) {
-
-
+    while( expandedPeople.size + expandedMovies.size < MAX_SEARCHES ) {
 
         let toExpand = moviesToExpand.shift();
         while( !toExpand ) {
@@ -45,7 +45,7 @@ async function verifyReachability( from, to, cache ) {
                     return true
                 }
     
-                moviesToExpand = [ ...moviesToExpand, thisPersonsFilms.filter( film => !expandedMovies.has( film ) ) ];
+                moviesToExpand = [ ...moviesToExpand, thisPersonsFilms.filter( film => !expandedMovies.has( film ) ) ].flat();
             }
         }
     }
@@ -57,40 +57,49 @@ async function verifyReachability( from, to, cache ) {
 
 
 async function expandMovie( id, cache ) {
-    const { credits } = await getFilmOrPerson( true, id, cache);
+    if( id ) {
+        const { credits } = await getFilmOrPerson( true, id, cache);
 
-    return [
-        ...credits.cast.map( credit => credit.tmdb_id ),
-        ...credits.crew.filter( credit => credit.job === 'Director' ).map( credit => credit.tmdb_id )
-    ]
+        return [
+            ...credits.cast.map( credit => credit.tmdb_id ),
+            ...credits.crew.filter( credit => credit.job === 'Director' ).map( credit => credit.tmdb_id )
+        ]
+    }
+    return [];
 
 }
 
 
 async function expandPerson( id, cache ) {
-    const { movie_credits } = await getFilmOrPerson( false, id, cache );
+    if( id ) {
+        const { movie_credits } = await getFilmOrPerson( false, id, cache );
 
-    return [ 
-        ...movie_credits.cast.filter( credit => credit.vote_count > 3000 ).map( credit => credit.tmdb_id ),
-        ...movie_credits.crew.filter( credit => credit.vote_count > 3000 && credit.job === 'Director' ).map( credit => credit.tmdb_id )
-    ]
+        return [ 
+            ...movie_credits.cast.filter( credit => credit.vote_count > 3000 ).map( credit => credit.tmdb_id ),
+            ...movie_credits.crew.filter( credit => credit.vote_count > 3000 && credit.job === 'Director' ).map( credit => credit.tmdb_id )
+        ]
+    }
+    return [];
 }
 
 
-async function generate() {
+
+async function generate( toGen ) {
 
     const cache = await dbConnect('tmdb_cache');
     const challenges = await dbConnect('challenges');
 
     let numMatches = 0;
-    let dateToSet = new Date().setHours( 0, 0, 0, 0 );
 
-    for( let i=0; i<5; i++ ) {
+    const [ maxDate ] = await challenges.find({}).sort({ date: -1 }).limit( 1 ).toArray();
+
+    let dateToSet = maxDate.date.getTime() + 24 * 60 * 60 * 1000;
+
+    while( numMatches < toGen ) {
         const movieA = await randomPopularMovie();
         const movieB = await randomPopularMovie();
 
-
-
+        console.log('---------------------TRYING---------------------')
         console.log( movieA );
         console.log( movieB );
         const goodMatch = await verifyReachability( movieA.id, movieB.id, cache );
@@ -99,24 +108,27 @@ async function generate() {
 
             const fromMovie = await getFilmOrPerson( true, movieA.id, cache )
             const toMovie = await getFilmOrPerson( true, movieB.id, cache )
-            challenges.insertOne({
+            console.log('------------------ADDING---------------------')
+
+            console.log( fromMovie)
+            console.log( toMovie );
+            await challenges.insertOne({
                 from: fromMovie,
                 to: toMovie,
                 date: new Date( dateToSet )
             });
             dateToSet = new Date( dateToSet + 60 * 60 * 24 * 1000 );
-        }
 
-        
+            numMatches++;
+        } else {
+            console.log("---------------------COULD NOT ADD---------------------")
+        }
     
     }
+
+    await dbClose();
     
 }
 
 dotenv.config();
-//randomPopularMovie();
-
-
-
-
-generate();
+generate( 5 );

@@ -3,7 +3,7 @@ const dotenv     = require('dotenv');
 const cors       = require('cors')
 const links      = require('./links');
 const challenges = require('./challenges');
-const dbConnect  = require('./dbConnect');
+const { connect: dbConnect }  = require('./dbConnect');
 
 const port = 4000;
 

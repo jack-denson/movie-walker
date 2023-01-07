@@ -23,4 +23,4 @@ async function connect( coll ) {
 }
 
 
-module.exports = connect
+module.exports = { connect, close: client.close.bind( client ) }

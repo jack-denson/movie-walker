@@ -1,5 +1,5 @@
 const axios = require('axios');
-const dbConnect = require('./dbConnect');
+const { connect: dbConnect } = require('./dbConnect');
 
 const crewToInclude = [ 'Director', 'Executive Producer', 'Producer' ];
 
@@ -19,7 +19,7 @@ async function getLinkData( req, res, cache ) {
 async function getFilmOrPerson( is_film, to, cache ) {
     const cached = await cache.findOne({ is_film, tmdb_id: to });
     if( cached ) {
-        console.log("CACHED")
+        // console.log("CACHED")
         return cached.data;
     }
 
@@ -72,7 +72,7 @@ async function getFilmData( film_id ) {
             job: crewMember.job
         }
     });
-    console.log( 'Getting film data:', original_title );
+    // console.log( 'Getting film data:', original_title );
 
     return {
         poster_path,
@@ -116,7 +116,7 @@ async function getPersonData( person_id ) {
 
         }
     });
-    console.log( 'Getting person data:', name );
+    //console.log( 'Getting person data:', name );
 
     return {
         name,
