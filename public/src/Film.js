@@ -1,5 +1,5 @@
 import React from 'react'
-import defaultPersonImg from './defaultPersonImg.jpg';
+import defaultFilmImage from './defaultFilmImg.jpg';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -14,7 +14,7 @@ class Film extends React.Component {
               <CardMedia
                 component="img"
                 sx={{ width: 92 }}
-                image={this.props.imgPath ? `https://image.tmdb.org/t/p/w92${ this.props.imgPath }` : defaultPersonImg }
+                image={this.props.imgPath ? `https://image.tmdb.org/t/p/w92${ this.props.imgPath }` : defaultFilmImage }
                 alt={ this.props.title }
                 loading="lazy"
               />
