@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios';
 import './Game.css'
 import Path from './Path.js';
 import ChallengeIndicator from './ChallengeIndicator';
@@ -23,10 +22,11 @@ class Game extends React.Component {
   }
 
   async fetchChallenge() {
-    const api_url = 'http://localhost:4000/challenge/';
-    const { data: api_res } = await axios.get( api_url );
+    const api_url = '/challenge';
+    const api_res = await fetch( api_url );
+    const challenge = await api_res.json();
     this.setState({
-      challenge: api_res,
+      challenge,
       foundPath: ( this.currentPathIsTodays() && JSON.parse( localStorage.getItem('currentPath') ) ) || [ api_res[ 0 ] ]
     }, this.updateCurrentPath);
   }

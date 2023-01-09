@@ -1,6 +1,5 @@
 
 import React from 'react';
-import axios from 'axios';
 import Person from './Person';
 import Film from './Film';
 import Typography from '@mui/material/Typography';
@@ -13,9 +12,10 @@ class MovieNodeView extends React.Component {
   }
 
   async getAllCredits() {
-    const api_url = `http://localhost:4000/link/${ this.props.current.tmdb_id }${ this.props.current.is_film ? '?is_film=true' : '' }`;
-    const { data: api_res } = await axios.get( api_url );
-    this.setState( { movieNode: api_res } )
+    const api_url = `/link/${ this.props.current.tmdb_id }${ this.props.current.is_film ? '?is_film=true' : '' }`;
+    const api_res = await fetch( api_url );
+    const movieNode = await api_res.json();
+    this.setState( { movieNode } );
   }
 
   async componentDidMount() {
