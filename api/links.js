@@ -129,7 +129,9 @@ async function getPersonData( person_id ) {
 
 module.exports = {
     route: async ( app, middleware ) => {
-        const redisClient = createClient();
+        const redisClient = createClient({
+            url: process.env.REDIS_CONN_STR
+        });
         await redisClient.connect();
         app.get( '/link/:to', ...middleware, async ( req, res ) => getLinkData( req, res, redisClient ) );
     },

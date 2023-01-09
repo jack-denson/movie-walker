@@ -87,7 +87,9 @@ async function expandPerson( id, cache ) {
 
 async function generate( toGen ) {
 
-    const cache = createClient();
+    const cache = createClient({
+        url: process.env.REDIS_CONN_STR
+    });
     await cache.connect();
 
     const challenges = await dbConnect('challenges');
