@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { connect: dbConnect } = require('./dbConnect');
+const { createClient } = require('redis');
 
 const crewToInclude = [ 'Director', 'Executive Producer', 'Producer' ];
 
@@ -11,35 +11,34 @@ async function getLinkData( req, res, cache ) {
         const result = await getFilmOrPerson( is_film, to, cache );
         return res.json( result );
     } catch( e ) {
+        console.log( e )
         return res.json({})
     }
 
 }
 
+function getCacheId( is_film, tmdb_id ) {
+    return ( is_film ? 'film_' : 'person_' ) + tmdb_id;
+}
+
 async function getFilmOrPerson( is_film, to, cache ) {
-    const cached = await cache.findOne({ is_film, tmdb_id: to });
+
+    const cacheId = getCacheId( is_film, to );
+
+    const cached = await cache.get( cacheId );
     if( cached ) {
-        // console.log("CACHED")
-        return cached.data;
+        return JSON.parse( cached );
     }
 
     if( is_film ) {
         const film_data = await getFilmData( to )
-        await cache.insertOne({
-            is_film,
-            tmdb_id: to,
-            data: film_data
-        });
 
+        await cache.set( cacheId, JSON.stringify( film_data ) );
         return film_data;
     } else {
         const person_data = await getPersonData( to )
 
-        await cache.insertOne({
-            is_film,
-            tmdb_id: to,
-            data: person_data
-        });
+        await cache.set( cacheId, JSON.stringify( person_data ) );
 
         return person_data;
     }
@@ -130,8 +129,9 @@ async function getPersonData( person_id ) {
 
 module.exports = {
     route: async ( app, middleware ) => {
-        const cache = await dbConnect('tmdb_cache');
-        app.get( '/link/:to', ...middleware, async ( req, res ) => getLinkData( req, res, cache ) );
+        const redisClient = createClient();
+        await redisClient.connect();
+        app.get( '/link/:to', ...middleware, async ( req, res ) => getLinkData( req, res, redisClient ) );
     },
     getFilmOrPerson
 }

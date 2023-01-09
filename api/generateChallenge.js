@@ -1,6 +1,7 @@
 const axios = require('axios');
 const dotenv = require('dotenv');
 const { getFilmOrPerson } = require('./links');
+const { createClient } = require('redis');
 const { connect: dbConnect, close: dbClose } = require('./dbConnect');
 
 const MAX_SEARCHES = 2500;
@@ -86,7 +87,9 @@ async function expandPerson( id, cache ) {
 
 async function generate( toGen ) {
 
-    const cache = await dbConnect('tmdb_cache');
+    const cache = createClient();
+    await cache.connect();
+
     const challenges = await dbConnect('challenges');
 
     let numMatches = 0;
