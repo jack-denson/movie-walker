@@ -9,6 +9,41 @@ For example, connecting 'Jamie Foxx' to 'Frances McDormand' may have the solutio
 
 The idea is a full-stack web app, using Node on the backend and React on the frontend. Movie data provided by TMDB(The Movie Database). Intend to use Redis for a short-term cache to prevent overloading the TMDB API and hitting rate limits.
 
-Backend is entirely in `/api`, and requires a file at `/api/.env` containing a `TMDB_API_KEY` environment variable.
+### Folder Structure
 
-Frontend(yet to come) entirely in `/public`.
+Backend is entirely in `/api`, and requires a file at `/api/.env`.
+
+Frontend entirely in `/public`, build target is in `/api/dist`.
+
+### Running the app
+
+To run the app, `cd` into `api` and run `node index.js`.
+
+Required environment variables:
+
+- `TMDB_API_KEY`, valid API key for TMDB(The Movie Database)
+- `DB_CONN_STR`, connection string to a running mongodb database
+- `REDIS_CONN_STR`, connection string to a running redis cache
+
+To populate the database with challenges, run `node generateChallenge.js` from `/api`. This will add 5 new challenges to the database, guaranteeing that they are all solvable. The dates on these challenges will start from the day after the most recent challenge in the database.
+
+### Backend Setup
+
+The MongoDB database has a single collection, `challenges` and stores all challenges for the application. It stores two films or people in fields `to` and `from`, and a date the challenge is/was scheduled for in `date`.
+
+## TODOs
+
+### Necessary
+
+- [ ] Update share button once deployed so that it works, with a link to the app
+- [ ] Make backend resilient to bad requests(currently app crashes if request doesn't look as expected)
+- [ ] Make Favicon and app logo
+- [ ] Design updates on frontend, make it prettier
+- [ ] Design updates on frontend, potentially only show first 5-10 actors/films, with 'expand' button to reduce image load
+- [ ] TTL in Redis
+- [ ] Deploy app & set up CI/CD out of git 
+- [ ] Possibly generate challenges that start/end on actors, as opposed to always film -> film
+
+### Nice-to-have/Redesigns
+
+- [ ] All streak data/solutions is done on frontend and not stored on backend, paths are not verified
