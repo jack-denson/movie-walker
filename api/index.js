@@ -19,6 +19,15 @@ async function run() {
     await links.route( app, [ cors_policy ] );
     await challenges.route( app, [ cors_policy ], challengeCollection );
 
+    
+    if( process.env.NODE_ENV === 'production') {
+        app.use( express.static(__dirname + '/dist/') );
+        app.get('/', (req, res) => {
+            res.setHeader('content-type', 'text/html');
+            res.sendFile(__dirname + '/dist/index.html')
+        });
+    }
+
     app.listen( port, () => {
         console.log(`Listening on port ${ port }`);
     });
