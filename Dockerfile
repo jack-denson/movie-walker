@@ -10,6 +10,5 @@ RUN npm run build
 
 WORKDIR /app/api
 RUN npm install --production
-COPY node_modules /app/api/node_modules
 
 CMD node index.js
