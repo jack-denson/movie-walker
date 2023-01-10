@@ -10,6 +10,6 @@ COPY .env_secrets ./api/.env
 # RUN npm run build
 
 WORKDIR /app/api
-# RUN npm install
+RUN npm install
 
 CMD node index.js
