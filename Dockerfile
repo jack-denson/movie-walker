@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY public ./public
 COPY api ./api
-COPY .env api/.env
+COPY /etc/secrets/.env ./api/.env
 
 # WORKDIR /app/public
 # RUN npm install
