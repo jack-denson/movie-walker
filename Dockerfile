@@ -6,6 +6,7 @@ COPY api ./api
 COPY .env_secrets ./api/.env
 
 WORKDIR /app/public
+RUN npm install --production
 RUN npm run build
 
 WORKDIR /app/api
