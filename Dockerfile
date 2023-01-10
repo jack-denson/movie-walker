@@ -5,11 +5,11 @@ COPY public ./public
 COPY api ./api
 COPY .env_secrets ./api/.env
 
-# WORKDIR /app/public
+#WORKDIR /app/public
 # RUN npm install
 # RUN npm run build
 
-# WORKDIR /app/api
+WORKDIR /app/api
 # RUN npm install
 
 CMD node index.js
