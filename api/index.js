@@ -11,6 +11,8 @@ async function run() {
     const app = express();
 
     const challengeCollection = await dbConnect('challenges');
+    const allChallenges = await challengeCollection.find({}).toArray();
+    console.log( allChallenges );
 
     app.use( express.json() );
     app.use( express.urlencoded({ extended: true }) );
