@@ -96,9 +96,9 @@ async function generate( toGen ) {
 
     let numMatches = 0;
 
-    const [ maxDate ] = await challenges.find({}).sort({ date: -1 }).limit( 1 ).toArray();
+    const [ maxDate ] = (await challenges.find({}).sort({ date: -1 }).limit( 1 ).toArray());
 
-    let dateToSet = maxDate.date.getTime() + 24 * 60 * 60 * 1000;
+    let dateToSet = maxDate?.date.getTime() + 24 * 60 * 60 * 1000 || new Date().setHours( 0, 0, 0, 0 );
 
     while( numMatches < toGen ) {
         const movieA = await randomPopularMovie();
@@ -120,9 +120,9 @@ async function generate( toGen ) {
             await challenges.insertOne({
                 from: fromMovie,
                 to: toMovie,
-                date: new Date( dateToSet )
+                date: dateToSet
             });
-            dateToSet = new Date( dateToSet + 60 * 60 * 24 * 1000 );
+            dateToSet = dateToSet + 60 * 60 * 24 * 1000;
 
             numMatches++;
         } else {
