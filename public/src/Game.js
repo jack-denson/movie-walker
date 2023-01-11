@@ -25,6 +25,10 @@ class Game extends React.Component {
     const api_url = '/challenge';
     const api_res = await fetch( api_url );
     const challenge = await api_res.json();
+    console.log({
+      challenge,
+      foundPath: ( this.currentPathIsTodays() && JSON.parse( localStorage.getItem('currentPath') ) ) || [ api_res[ 0 ] ]
+    })
     this.setState({
       challenge,
       foundPath: ( this.currentPathIsTodays() && JSON.parse( localStorage.getItem('currentPath') ) ) || [ api_res[ 0 ] ]
@@ -143,7 +147,7 @@ class Game extends React.Component {
   }
 
   render() {
-    if( this.state.challenge.length ) {
+    if( this.state.foundPath.length && this.state.challenge.length ) {
       return (
         <div>
             <ChallengeIndicator challenge={ this.state.challenge }></ChallengeIndicator>
@@ -155,7 +159,7 @@ class Game extends React.Component {
             <MovieNodeView
               current={ this.state.foundPath[ this.state.foundPath.length - 1 ] }
               takeLink={ this.takeLink.bind( this ) }
-              key={ this.state.foundPath[ this.state.foundPath.length - 1 ].tmdb_id }>
+              key={ this.state.foundPath.length && this.state.foundPath[ this.state.foundPath.length - 1 ].tmdb_id }>
             </MovieNodeView>
             <WinScreen
               path={this.state.foundPath}
