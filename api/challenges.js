@@ -24,11 +24,8 @@ function formatChallenge( challengeDoc ) {
 
 async function getChallenge( req, res, challengesConnection ) {
 
-    console.log({
-        date: new Date().setHours(0,0,0,0)
-    });
     const challenge = await challengesConnection.findOne({
-        date: new Date().setHours(0,0,0,0)
+        date: new Date().setUTCHours(0,0,0,0)
     });
 
     return res.json( challenge ? formatChallenge( challenge ) : fallback_challenge );

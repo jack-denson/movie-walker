@@ -98,7 +98,7 @@ async function generate( toGen ) {
 
     const [ maxDate ] = (await challenges.find({}).sort({ date: -1 }).limit( 1 ).toArray());
 
-    let dateToSet = maxDate?.date.getTime() + 24 * 60 * 60 * 1000 || new Date().setHours( 0, 0, 0, 0 );
+    let dateToSet = maxDate?.date.getTime() + 24 * 60 * 60 * 1000 || new Date().setUTCHours( 0, 0, 0, 0 );
 
     while( numMatches < toGen ) {
         const movieA = await randomPopularMovie();
