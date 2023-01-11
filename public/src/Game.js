@@ -25,13 +25,10 @@ class Game extends React.Component {
     const api_url = '/challenge';
     const api_res = await fetch( api_url );
     const challenge = await api_res.json();
-    console.log({
-      challenge,
-      foundPath: ( this.currentPathIsTodays() && JSON.parse( localStorage.getItem('currentPath') ) ) || [ api_res[ 0 ] ]
-    })
+
     this.setState({
       challenge,
-      foundPath: ( this.currentPathIsTodays() && JSON.parse( localStorage.getItem('currentPath') ) ) || [ api_res[ 0 ] ]
+      foundPath: ( this.currentPathIsTodays() && JSON.parse( localStorage.getItem('currentPath') ) ) || [ challenge[ 0 ] ]
     }, this.updateCurrentPath);
   }
 
