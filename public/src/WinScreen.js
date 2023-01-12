@@ -34,7 +34,7 @@ class WinScreen extends React.Component {
   ).flat();
   pathViewer.pop();
 
-  const today = new Date().setHours(0,0,0,0);
+  const today = new Date().setUTCHours(0,0,0,0);
   const allWins = JSON.parse(localStorage.getItem('wins'))
   const bestScore = allWins && allWins[ today ] && allWins[ today ].reduce( ( a, b ) => Math.min( a, b.length ), 10000 ) - 1
 
