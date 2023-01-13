@@ -22,7 +22,8 @@ class Game extends React.Component {
   }
 
   async fetchChallenge() {
-    const api_url = '/challenge';
+    const tzOffset = new Date().getTimezoneOffset();
+    const api_url = `/challenge?tz=${ tzOffset }`;
     const api_res = await fetch( api_url );
     const challenge = await api_res.json();
 
@@ -67,7 +68,7 @@ class Game extends React.Component {
       const wins = JSON.parse( localStorage.getItem('wins') ) || {};
       const streak = +localStorage.getItem('streak') || 0;
       const lastWin = localStorage.getItem('lastWin');
-      const today = new Date().setUTCHours( 0, 0, 0, 0 );
+      const today = new Date().setHours( 0, 0, 0, 0 );
 
       if( !wins[ today ] ) {
         if( +lastWin === today - 24 * 60 * 60 * 1000 ) {
@@ -129,11 +130,11 @@ class Game extends React.Component {
 
   updateCurrentPath() {
     localStorage.setItem( 'currentPath', JSON.stringify(this.state.foundPath) );
-    localStorage.setItem( 'currentPathDate', new Date().setUTCHours(0, 0, 0, 0))
+    localStorage.setItem( 'currentPathDate', new Date().setHours(0, 0, 0, 0))
   }
 
   currentPathIsTodays() {
-    return new Date().setUTCHours(0, 0, 0, 0) === +localStorage.getItem( 'currentPathDate' );
+    return new Date().setHours(0, 0, 0, 0) === +localStorage.getItem( 'currentPathDate' );
   }
 
   updateStreak() {
