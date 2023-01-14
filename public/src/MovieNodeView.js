@@ -3,17 +3,22 @@ import React from 'react';
 import Person from './Person';
 import Film from './Film';
 import Typography from '@mui/material/Typography';
+import Skeleton from '@mui/material/Skeleton';
 import './MovieNodeView.css'
 
 class MovieNodeView extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {};
+    this.state = {
+      loading: true
+    };
   }
 
   async getAllCredits() {
     const api_url = `/link/${ this.props.current.tmdb_id }${ this.props.current.is_film ? '?is_film=true' : '' }`;
+    this.setState({ loading: true });
     const api_res = await fetch( api_url );
+    this.setState({ loading: false });
     const movieNode = await api_res.json();
     this.setState( { movieNode } );
   }
@@ -104,6 +109,12 @@ class MovieNodeView extends React.Component {
 
   }
 
+  getLoaders() {
+    return Array.from(new Array(4)).map(
+      (x, i) => <Skeleton key={"loader_" + i} variant="rounded" width="100%" height={140} sx={{backgroundColor: 'darkgray', marginBottom: "1vh"}} />
+    )
+  }
+
   takeLink( link ) {
     this.props.takeLink( link );
   }
@@ -112,7 +123,7 @@ class MovieNodeView extends React.Component {
     const { cast_credits, crew_credits } = this.props.current.is_film ? this.getFilmCastAndCrew() : this.getPersonCredits();
 
     return (
-      <div style={{ paddingTop: '2vh'}}>
+      <div style={{ paddingTop: '2vh', minHeight: "70vh"}}>
         <Typography component="div" variant="h4" style={{textAlign: 'center'}}>
           { this.props.current.name || this.props.current.title }
         </Typography>
@@ -123,7 +134,7 @@ class MovieNodeView extends React.Component {
         </div>
         <div className="linksPane">
           <div>
-            { cast_credits }
+            { this.state.loading ? this.getLoaders() : cast_credits }
           </div>
         </div>
         {

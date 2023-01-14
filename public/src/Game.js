@@ -60,6 +60,7 @@ class Game extends React.Component {
         profile_path,
       });
     }
+    window.scrollTo(0, 0);
 
   }
 
