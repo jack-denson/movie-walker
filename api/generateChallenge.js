@@ -132,8 +132,12 @@ async function generate( toGen ) {
     }
 
     await dbClose();
+    await cache.quit()
     
 }
 
 dotenv.config();
-generate( 5 );
+
+
+const toGenerate = (process.argv.length > 2 && +process.argv[ 2 ]) || 5
+generate( toGenerate );
