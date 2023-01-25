@@ -4,7 +4,7 @@ const { getFilmOrPerson } = require('./links');
 const { createClient } = require('redis');
 const { connect: dbConnect, close: dbClose } = require('./dbConnect');
 
-const MAX_SEARCHES = 2500;
+const MAX_SEARCHES = 5000;
 
 async function randomPopularMovie() {
     const movie_page = Math.ceil( Math.random() * 50 )
