@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY public ./public
 COPY api ./api
-COPY .env_secrets ./api/.env
+# Env (DB/Redis conn strings, TMDB key) is injected at runtime by docker-compose.
 
 WORKDIR /app/public
 RUN npm install --production

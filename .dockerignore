@@ -1,0 +1,8 @@
+# Keep host-built artifacts and secrets out of the image.
+# node_modules: installed fresh inside the image (host binaries may be wrong arch)
+**/node_modules
+# .env: connection strings/keys are injected at runtime by docker-compose
+api/.env
+# dist: the frontend is rebuilt during the image build (BUILD_PATH=../api/dist)
+api/dist
+.git

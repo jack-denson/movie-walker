@@ -1,0 +1,78 @@
+# Full local stack for Movie Walker: the app + its datastores (MongoDB + Redis).
+#
+# Networking model — only the app is meant to be reachable from outside:
+#   - app          -> publishes 4000 on all interfaces (the front door)
+#   - mongo/redis  -> ports published on the loopback interface (127.0.0.1) only,
+#                     so they're reachable from this host (app container + host
+#                     tooling like mongosh/redis-cli) but NOT from the LAN/internet.
+# All three share a dedicated bridge network (`movie-walker`), isolated from other
+# Compose projects; the app reaches the datastores by service name (mongo/redis).
+# Mongo also requires authentication as a second layer of defense.
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    # TMDB_API_KEY (and other values) come from api/.env; the DB/Redis conn
+    # strings below override the .env ones to point at the compose services.
+    env_file:
+      - ./api/.env
+    environment:
+      NODE_ENV: production
+      DB_CONN_STR: mongodb://${MONGO_USERNAME:-moviewalker}:${MONGO_PASSWORD:-moviewalker}@mongo:27017/?authSource=admin
+      REDIS_CONN_STR: redis://redis:6379
+    ports:
+      - "4000:4000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - movie-walker
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-moviewalker}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-moviewalker}
+    ports:
+      # loopback-only: reachable from the host, not from the network
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - movie-walker
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      # loopback-only: reachable from the host, not from the network
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - movie-walker
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  movie-walker:
+    driver: bridge
+
+volumes:
+  mongo-data:
+  redis-data:

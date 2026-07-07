@@ -100,6 +100,10 @@ async function generate( toGen ) {
 
     let dateToSet = maxDate?.date + 24 * 60 * 60 * 1000 || new Date().setUTCHours( 0, 0, 0, 0 );
 
+    if ( dateToSet < new Date() ) {
+        dateToSet = new Date().setUTCHours( 0, 0, 0, 0 );
+    }
+
     while( numMatches < toGen ) {
         const movieA = await randomPopularMovie();
         const movieB = await randomPopularMovie();
