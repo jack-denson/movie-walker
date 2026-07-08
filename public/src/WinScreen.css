@@ -1,14 +1,140 @@
+.winPaper {
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius) !important;
+    background-image: radial-gradient(
+        500px 200px at 50% -5%,
+        rgba(243, 181, 63, 0.12),
+        transparent 70%
+    );
+}
+
+.winDialog {
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.winBadge {
+    font-size: 44px;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
 .winTitle {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     text-align: center;
 }
 
-.scoreIndicator {
+.winSubtitle {
+    margin: 6px 0 20px;
+    font-size: 14px;
+    color: var(--text-dim);
+    text-align: center;
+}
+
+.winStats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.winStat {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: var(--gold-soft);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 10px 22px;
+    min-width: 92px;
+}
+
+.winStatValue {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold-strong);
+}
+
+.winStatLabel {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+.winActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.winBtn {
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 11px 22px;
+    cursor: pointer;
+    transition: filter 0.15s ease, background 0.15s ease;
+}
+
+.winBtn:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+.winBtnPrimary {
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    color: #1a1405;
+}
+
+.winBtnPrimary:hover {
+    filter: brightness(1.08);
+}
+
+.winBtnGhost {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+}
+
+.winBtnGhost:hover {
+    background: var(--surface-hover);
+}
+
+.winPath {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+}
+
+.winPathHeader {
+    margin: 0 0 10px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
     text-align: center;
-    border: 3px solid rgb(85, 187, 85);
-    padding-left: 8px;
-    padding-right: 8px;
-    margin-bottom: 15px;
-    border-radius: 6px;
+}
+
+.winPathArrow {
+    text-align: center;
+    color: var(--gold);
+    font-size: 16px;
+    padding: 4px 0;
 }

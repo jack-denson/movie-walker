@@ -1,5 +1,72 @@
-.foundPath {
-    margin-top: calc( 10px + 2vh );
-    margin-bottom: calc( 10px + 2vh );
-    text-align: center;
+.pathBar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+}
+
+.pathScroller {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    flex: 1;
+    min-width: 0;
+    padding: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+}
+
+.pathChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    background: var(--surface-hover);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.pathChip:hover {
+    border-color: var(--gold);
+}
+
+.pathChip:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+.pathChipCurrent {
+    background: var(--gold-soft);
+    border-color: var(--gold);
+    color: var(--gold-strong);
+}
+
+.pathChipIcon {
+    font-size: 12px;
+    line-height: 1;
+}
+
+.pathArrow {
+    color: var(--text-dim);
+    flex-shrink: 0;
+}
+
+.pathSteps {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    border-left: 1px solid var(--border);
+    padding-left: 12px;
 }

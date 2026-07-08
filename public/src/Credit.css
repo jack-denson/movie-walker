@@ -1,0 +1,57 @@
+.creditCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+    height: 100%;
+    min-height: 72px;
+}
+
+.creditButton:hover .creditCard {
+    background: var(--surface-hover);
+    border-color: var(--gold);
+    transform: translateY(-1px);
+}
+
+.creditImg {
+    width: 52px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    background: var(--surface-hover);
+    flex-shrink: 0;
+}
+
+.creditInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.creditName {
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.creditRole {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.creditMeta {
+    font-size: 12px;
+    color: var(--text-dim);
+    opacity: 0.8;
+}

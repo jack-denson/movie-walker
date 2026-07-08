@@ -1,7 +1,5 @@
 import React from 'react'
 import Dialog from '@mui/material/Dialog';
-import { Button, DialogActions, DialogContent, Typography } from '@mui/material';
-import { IosShare, Replay } from '@mui/icons-material'
 import Film from './Film';
 import Person from './Person';
 import './WinScreen.css';
@@ -26,11 +24,11 @@ class WinScreen extends React.Component {
     const bestScore = this.getBestScore();
 
     let pathNodeIsFilm = this.props.path[ 0 ].is_film;
-    let walkedPath = pathNodeIsFilm ? '\uD83C\uDFAC' : '\uD83D\uDC64';
+    let walkedPath = pathNodeIsFilm ? '🎬' : '👤';
 
     for( let i=1; i <= bestScore; i++ ) {
       pathNodeIsFilm = !pathNodeIsFilm;
-      walkedPath += ' \u2794 ' + (pathNodeIsFilm ? '\uD83C\uDFAC' : '\uD83D\uDC64')
+      walkedPath += ' ➔ ' + (pathNodeIsFilm ? '🎬' : '👤')
     }
 
     const firstNode = this.props.path[ 0 ].is_film ? this.props.path[ 0 ].title : this.props.path[ 0 ].name;
@@ -68,7 +66,7 @@ class WinScreen extends React.Component {
     }).map(
       ( node, i ) => [
         node,
-        <div style={{textAlign: 'center'}} key={'winarrow' + i }>&#x2193;</div>
+        <div className="winPathArrow" aria-hidden="true" key={'winarrow' + i }>&#x2193;</div>
       ]
     ).flat();
     pathViewer.pop();
@@ -76,35 +74,46 @@ class WinScreen extends React.Component {
     const bestScore = this.getBestScore();
 
     return (
-      <Dialog open={ this.props.gameWon } maxWidth="lg" fullWidth={true}>
+      <Dialog
+        open={ this.props.gameWon }
+        maxWidth="sm"
+        fullWidth={true}
+        PaperProps={{ className: 'winPaper' }}
+      >
       <div className="winDialog">
-        <Typography
-          sx={{textAlign: 'center', marginTop: '25px', marginBottom: '10px'}}
-          variant="h3"> 
-          You Win!
-        </Typography>
-        <DialogActions sx={{justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
-          <div className="scoreIndicator" key={"streak-indicator-win-" + this.props.gameWon}>
-            <Typography variant="h4">{ this.props.streak }</Typography>
-            <Typography variant="overline">Streak</Typography>
+        <div className="winBadge" aria-hidden="true">🏆</div>
+        <h2 className="winTitle">You solved it!</h2>
+        <p className="winSubtitle">
+          Found in { numSteps } step{ numSteps === 1 ? '' : 's' }
+        </p>
+
+        <div className="winStats">
+          <div className="winStat" key={"streak-indicator-win-" + this.props.gameWon}>
+            <span className="winStatValue">{ this.props.streak }</span>
+            <span className="winStatLabel">Streak</span>
           </div>
-          <div className="scoreIndicator">
-            <Typography variant="h4">
+          <div className="winStat">
+            <span className="winStatValue">
               { Math.min( bestScore, this.props.path.length - 1 ) || this.props.path.length - 1 }
-            </Typography>
-            <Typography variant="overline">Today's Best</Typography>
+            </span>
+            <span className="winStatLabel">Today&rsquo;s Best</span>
           </div>
-          <Button variant="contained" endIcon={<Replay />} onClick={ this.props.restartGame }> Find Another </Button>
-          <Button variant="contained" endIcon={ this.state.copied ? '' : <IosShare />}  onClick={ this.shareWin.bind( this ) }> { this.state.copied ? 'Copied!' : 'Share' } </Button>
-        </DialogActions>
-        <DialogContent>
-          <Typography sx={{textAlign: 'center'}} variant="h6"> Found in { numSteps } step{ numSteps == 1 ? '' : 's'}:</Typography>
+        </div>
+
+        <div className="winActions">
+          <button className="winBtn winBtnPrimary" onClick={ this.shareWin.bind( this ) }>
+            { this.state.copied ? '✓ Copied!' : 'Share result' }
+          </button>
+          <button className="winBtn winBtnGhost" onClick={ this.props.restartGame }>
+            Find another path
+          </button>
+        </div>
+
+        <div className="winPath">
+          <h3 className="winPathHeader">Your walk</h3>
           { pathViewer }
-        </DialogContent>
-        
+        </div>
       </div>
-      
-      
       </Dialog>
     );
 

@@ -3,28 +3,47 @@ import './ChallengeIndicator.css';
 
 class ChallengeIndicator extends React.Component {
 
+  nodeImage( node ) {
+    const imgPath = node.is_film ? node.poster_path : node.profile_path;
+    return `https://image.tmdb.org/t/p/w154${ imgPath }`;
+  }
+
   render() {
+    const [ from, to ] = this.props.challenge;
+
     return (
-        <div className="challengeContainer">
-            <div className="challengeFrom">
-              <img
-                src={ this.props.challenge[ 0 ].is_film ? `https://image.tmdb.org/t/p/w92${ this.props.challenge[ 0 ].poster_path }` : `https://image.tmdb.org/t/p/w92${ this.props.challenge[ 0 ].profile_path }` }
-                alt={ this.props.name }
-              />
-            <div className="challengeName">
-                {this.props.challenge[ 0 ].title || this.props.challenge[ 0 ].name } </div>
-            </div>
-            <div style={{display: 'flex', alignItems: 'center'}}> &#8594; </div>
-            <div className="challengeTo">
-              <div className="challengeName">
-                {this.props.challenge[ 1 ].title || this.props.challenge[ 1 ].name }
+        <section className="challengeCard">
+            <p className="challengeEyebrow">Today&rsquo;s Challenge</p>
+            <div className="challengeRow">
+              <div className="challengeNode">
+                <img
+                  src={ this.nodeImage( from ) }
+                  alt={ from.title || from.name }
+                />
+                <div className="challengeNodeText">
+                  <span className="challengeLabel">Start</span>
+                  <span className="challengeName">{ from.title || from.name }</span>
+                </div>
               </div>
-              <img
-                src={ this.props.challenge[ 1 ].is_film ? `https://image.tmdb.org/t/p/w92${ this.props.challenge[ 1 ].poster_path }` : `https://image.tmdb.org/t/p/w92${ this.props.challenge[ 1 ].profile_path }` }
-                alt={ this.props.name }
-              />
+              <div className="challengeArrow" aria-hidden="true">
+                <span className="challengeArrowLine"></span>
+                <span className="challengeArrowHead">&#8594;</span>
+              </div>
+              <div className="challengeNode challengeGoal">
+                <img
+                  src={ this.nodeImage( to ) }
+                  alt={ to.title || to.name }
+                />
+                <div className="challengeNodeText">
+                  <span className="challengeLabel challengeLabelGoal">Goal</span>
+                  <span className="challengeName">{ to.title || to.name }</span>
+                </div>
+              </div>
             </div>
-        </div>
+            <p className="challengeHint">
+              Walk from start to goal using only cast, crew, and the films they made.
+            </p>
+        </section>
     );
 
   }

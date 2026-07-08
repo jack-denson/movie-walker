@@ -1,13 +1,185 @@
-.clickableCredit {
-    margin-bottom: 10px;
-    cursor: pointer;
+.nodeView {
+    min-height: 60vh;
 }
 
-.linksPane {
-    margin-left: 15vw;
-    margin-right: 15vw;
+/* --- Hero for the current node --- */
+
+.nodeHero {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 6px 2px 16px;
 }
+
+.nodeHeroImg {
+    width: 84px;
+    height: 126px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
+}
+
+.nodeHeroText {
+    min-width: 0;
+}
+
+.nodeKicker {
+    margin: 0 0 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+.nodeTitle {
+    margin: 0;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+}
+
+.nodeYear {
+    font-weight: 400;
+    color: var(--text-dim);
+}
+
+.nodeHint {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+/* --- Filter --- */
+
+.nodeFilter {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.nodeFilterIcon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.nodeFilterInput {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+    padding: 11px 18px 11px 40px;
+    transition: border-color 0.15s ease;
+}
+
+.nodeFilterInput::placeholder {
+    color: var(--text-dim);
+}
+
+.nodeFilterInput:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+/* --- Section headers --- */
 
 .rolesHeader {
-    margin-left: 3vw;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 22px 0 12px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.rolesCount {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 2px 9px;
+}
+
+.emptyNote {
+    margin: 4px 0 16px;
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+/* --- Credit grid --- */
+
+.linksPane {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+}
+
+.creditButton {
+    all: unset;
+    display: block;
+    cursor: pointer;
+    border-radius: var(--radius);
+}
+
+.creditButton:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+/* --- Skeleton loaders --- */
+
+.creditSkeleton {
+    display: flex;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px;
+}
+
+.creditSkeletonImg {
+    width: 52px;
+    height: 72px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-hover);
+    animation: creditPulse 1.4s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+.creditSkeletonLines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+}
+
+.creditSkeletonLine {
+    height: 12px;
+    border-radius: 6px;
+    background: var(--surface-hover);
+    animation: creditPulse 1.4s ease-in-out infinite;
+}
+
+.creditSkeletonLineShort {
+    width: 55%;
+}
+
+@keyframes creditPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
 }

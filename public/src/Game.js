@@ -4,7 +4,6 @@ import Path from './Path.js';
 import ChallengeIndicator from './ChallengeIndicator';
 import MovieNodeView from './MovieNodeView';
 import WinScreen from './WinScreen';
-import { CircularProgress, Divider } from '@mui/material';
 
 
 class Game extends React.Component {
@@ -148,13 +147,11 @@ class Game extends React.Component {
   render() {
     if( this.state.foundPath.length && this.state.challenge.length ) {
       return (
-        <div>
+        <div className="gameLayout">
             <ChallengeIndicator challenge={ this.state.challenge }></ChallengeIndicator>
-            <Divider style={{ background: 'white' }} />
             <Path
               foundPath={ this.state.foundPath }
               backtrack={ this.backtrackPath.bind( this ) }></Path>
-            <Divider style={{ background: 'white' }} />
             <MovieNodeView
               current={ this.state.foundPath[ this.state.foundPath.length - 1 ] }
               takeLink={ this.takeLink.bind( this ) }
@@ -169,7 +166,8 @@ class Game extends React.Component {
       );
     } else {
       return <div className="loadingGame">
-        <CircularProgress />
+        <div className="gameSpinner" role="progressbar" aria-label="Loading today's challenge" />
+        <p>Loading today&rsquo;s challenge&hellip;</p>
       </div>
     }
 
