@@ -1,24 +1,11 @@
-# Full local stack for Movie Walker: the app + its datastores (MongoDB + Redis).
-#
-# Networking model — only the app is meant to be reachable from outside:
-#   - app          -> publishes 4000 on all interfaces (the front door)
-#   - mongo/redis  -> ports published on the loopback interface (127.0.0.1) only,
-#                     so they're reachable from this host (app container + host
-#                     tooling like mongosh/redis-cli) but NOT from the LAN/internet.
-# All three share a dedicated bridge network (`movie-walker`), isolated from other
-# Compose projects; the app reaches the datastores by service name (mongo/redis).
-# Mongo also requires authentication as a second layer of defense.
-
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
-    # TMDB_API_KEY (and other values) come from api/.env; the DB/Redis conn
-    # strings below override the .env ones to point at the compose services.
     env_file:
-      - ./api/.env
+      - .env
     environment:
       NODE_ENV: production
       DB_CONN_STR: mongodb://${MONGO_USERNAME:-moviewalker}:${MONGO_PASSWORD:-moviewalker}@mongo:27017/?authSource=admin

@@ -8,8 +8,6 @@ dotenv.config();
 const uri = process.env.DB_CONN_STR;
 
 const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1
 });
 

@@ -1,4 +1,4 @@
-FROM node:16.13.2-alpine
+FROM node:24.18-alpine3.23
 WORKDIR /app
 
 COPY public ./public

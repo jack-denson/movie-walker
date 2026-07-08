@@ -1,5 +1,4 @@
 const express    = require('express');
-const dotenv     = require('dotenv');
 const cors       = require('cors')
 const links      = require('./links');
 const challenges = require('./challenges');
@@ -33,5 +32,4 @@ async function run() {
     });
 }
 
-dotenv.config();
 run();
