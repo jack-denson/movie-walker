@@ -12,7 +12,7 @@ services:
       DB_CONN_STR: mongodb://${MONGO_USERNAME:-moviewalker}:${MONGO_PASSWORD:-moviewalker}@mongo:27017/?authSource=admin
       REDIS_CONN_STR: redis://redis:6379
     ports:
-      - "4000:4000"
+      - "4001:4001"
     depends_on:
       mongo:
         condition: service_healthy
