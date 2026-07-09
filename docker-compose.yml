@@ -47,9 +47,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-moviewalker}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-moviewalker}
-    ports:
-      # loopback-only: reachable from the host, not from the network
-      - "127.0.0.1:27017:27017"
     volumes:
       - mongo-data:/data/db
     networks:
@@ -64,9 +61,6 @@ services:
     image: redis:7-alpine
     restart: unless-stopped
     command: ["redis-server", "--appendonly", "yes"]
-    ports:
-      # loopback-only: reachable from the host, not from the network
-      - "127.0.0.1:6379:6379"
     volumes:
       - redis-data:/data
     networks:
