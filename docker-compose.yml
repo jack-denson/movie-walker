@@ -42,7 +42,7 @@ services:
       - movie-walker
 
   mongo:
-    image: mongo:7
+    image: mongo:4.4
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-moviewalker}
@@ -52,7 +52,7 @@ services:
     networks:
       - movie-walker
     healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      test: ["CMD", "mongo", "--quiet", "--eval", "db.adminCommand('ping')"]
       interval: 10s
       timeout: 5s
       retries: 5
