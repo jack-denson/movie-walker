@@ -13,7 +13,7 @@ async function run() {
 
     app.use( express.json() );
     app.use( express.urlencoded({ extended: true }) );
-    const cors_policy = cors({origin: 'http://localhost:3000' });
+    const cors_policy = cors();
 
     await links.route( app, [ cors_policy ] );
     await challenges.route( app, [ cors_policy ], challengeCollection );
