@@ -48,7 +48,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-moviewalker}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-moviewalker}
     volumes:
-      - mongo-data:/data/db
+      - mongo-movie-data:/data/db
     networks:
       - movie-walker
     healthcheck:
@@ -62,7 +62,7 @@ services:
     restart: unless-stopped
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
-      - redis-data:/data
+      - redis-movie-data:/data
     networks:
       - movie-walker
     healthcheck:
@@ -76,5 +76,5 @@ networks:
     driver: bridge
 
 volumes:
-  mongo-data:
-  redis-data:
+  mongo-movie-data:
+  redis-movie-data:
