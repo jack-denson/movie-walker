@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const dotenv = require('dotenv');
 
 const database_name = 'MovieWalker'
@@ -7,9 +7,7 @@ dotenv.config();
 
 const uri = process.env.DB_CONN_STR;
 
-const client = new MongoClient(uri, {
-  serverApi: ServerApiVersion.v1
-});
+const client = new MongoClient(uri);
 
 
 async function connect( coll ) {
