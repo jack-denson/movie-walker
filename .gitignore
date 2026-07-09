@@ -1,5 +1,10 @@
 .env
+api/.env
+node_modules/
 api/node_modules/*
 api/package-lock.json
 api/dist/*
-node_modules/
+helpers/node_modules/
+helpers/package-lock.json
+challenge-generator/node_modules/
+challenge-generator/package-lock.json

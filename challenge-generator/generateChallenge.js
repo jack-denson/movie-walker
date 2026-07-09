@@ -1,8 +1,8 @@
 const axios = require('axios');
 const dotenv = require('dotenv');
-const { getFilmOrPerson } = require('./links');
+const { getFilmOrPerson } = require('../helpers/tmdb');
 const { createClient } = require('redis');
-const { connect: dbConnect, close: dbClose } = require('./dbConnect');
+const { connect: dbConnect, close: dbClose } = require('../helpers/dbConnect');
 
 const MAX_SEARCHES = 5000;
 

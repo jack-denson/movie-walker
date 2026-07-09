@@ -11,9 +11,13 @@ The idea is a full-stack web app, using Node on the backend and React on the fro
 
 ### Folder Structure
 
-Backend is entirely in `/api`, and requires a file at `/api/.env`.
+Backend is in `/api`, and requires a file at `/api/.env`.
 
 Frontend entirely in `/public`, build target is in `/api/dist`.
+
+Shared backend modules (MongoDB connection, cached TMDB lookups) live in `/helpers`, used by both `/api` and `/challenge-generator`. Each of the three backend folders has its own `package.json` — run `npm install` in `/helpers` as well when running the API outside Docker.
+
+The daily-challenge generator lives in `/challenge-generator` and runs as a one-shot container (see below).
 
 ### Running the app
 
@@ -25,7 +29,7 @@ Required environment variables:
 - `DB_CONN_STR`, connection string to a running mongodb database
 - `REDIS_CONN_STR`, connection string to a running redis cache
 
-To populate the database with challenges, run `node generateChallenge.js` from `/api`. This will add 5 new challenges to the database, guaranteeing that they are all solvable. The dates on these challenges will start from the day after the most recent challenge in the database.
+To populate the database with challenges, run `docker compose run --rm challenge-generator` (the generator lives in `/challenge-generator` and sits behind the `tools` compose profile, so `docker compose up` never starts it). This will add 5 new challenges to the database — pass a number to add more, e.g. `docker compose run --rm challenge-generator 10` — guaranteeing that they are all solvable. The dates on these challenges will start from the day after the most recent challenge in the database.
 
 ### Backend Setup
 

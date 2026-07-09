@@ -2,7 +2,7 @@ const express    = require('express');
 const cors       = require('cors')
 const links      = require('./links');
 const challenges = require('./challenges');
-const { connect: dbConnect }  = require('./dbConnect');
+const { connect: dbConnect }  = require('../helpers/dbConnect');
 
 const port = 4000;
 

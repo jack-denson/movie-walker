@@ -1,5 +1,5 @@
 const dotenv     = require('dotenv');
-const { connect: dbConnect }  = require('./dbConnect');
+const { connect: dbConnect }  = require('../helpers/dbConnect');
 
 
 async function getChallenge( req, res, challengesConnection ) {

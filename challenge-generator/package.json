@@ -1,0 +1,16 @@
+{
+  "name": "movie-walker-challenge-generator",
+  "version": "1.0.0",
+  "description": "Generates solvable daily challenges for movie-walker and stores them in MongoDB",
+  "main": "generateChallenge.js",
+  "scripts": {
+    "generate": "node generateChallenge.js"
+  },
+  "author": "Jack Denson",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "1.18.1",
+    "dotenv": "17.4.2",
+    "redis": "5.12.1"
+  }
+}
