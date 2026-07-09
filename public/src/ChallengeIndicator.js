@@ -26,7 +26,6 @@ class ChallengeIndicator extends React.Component {
                 </div>
               </div>
               <div className="challengeArrow" aria-hidden="true">
-                <span className="challengeArrowLine"></span>
                 <span className="challengeArrowHead">&#8594;</span>
               </div>
               <div className="challengeNode challengeGoal">

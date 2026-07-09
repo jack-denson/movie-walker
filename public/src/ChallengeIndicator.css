@@ -85,15 +85,7 @@
 .challengeArrow {
     display: flex;
     align-items: center;
-    gap: 6px;
-    color: var(--text-dim);
     flex-shrink: 0;
-}
-
-.challengeArrowLine {
-    display: block;
-    width: 34px;
-    border-top: 2px dashed var(--border-strong);
 }
 
 .challengeArrowHead {
@@ -124,10 +116,6 @@
     .challengeGoal .challengeNodeText {
         text-align: center;
         align-items: center;
-    }
-
-    .challengeArrowLine {
-        width: 16px;
     }
 
     .challengeName {
